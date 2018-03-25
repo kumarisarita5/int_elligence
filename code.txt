@@ -1,0 +1,76 @@
+#include <LiquidCrystal.h>
+#include<SoftwareSerial.h>
+LiquidCrystal lcd(12,11,5,4,3,2);
+int analogPin1 = A0;
+//int analogPin2 = A1;
+//int analogPin3 = A2;
+int value1;
+//int value2;
+//int value3;
+int timeToSend = 1;
+SoftwareSerial BTserial(6,7);
+//int blueTooth = ; // Set digital pin  to output pin for bluetooth module.
+void setup() {
+  lcd.begin(16,1);
+  lcd.setCursor(0,0);
+  lcd.print("Welcome");
+  Serial.begin(9600);
+  pinMode(6, OUTPUT);
+  digitalWrite(6, LOW);
+   BTserial.begin(9600);
+  //digitalWrite(blueTooth, LOW); // buzzer
+}
+
+void loop() {
+    value1 = analogRead(analogPin1);
+    // waits for a second
+    value1 = map(value1, 700, 900, 0, 255);
+    //value2 = map(value2, 700, 900, 0, 255);
+   // value1 = abs(value1);
+    Serial.println(value1);
+    if(value1 >= 210 && value1< 222 ){
+      Serial.println("I need water");
+      lcd.clear();
+      lcd.print("I need water ");
+      
+      digitalWrite(6, HIGH);
+      delay(500);
+      digitalWrite(6, LOW);
+       BTserial.println("I need water ");
+        delay(3000);
+    }
+    if(value1 >= 5 && value1< 30 ){
+      Serial.print("need medicines");
+      lcd.clear();
+      lcd.print("I need medicines");
+      digitalWrite(6, HIGH);
+      delay(500);
+      digitalWrite(6, LOW);
+       BTserial.println("I need medicines");
+        delay(3000);
+    }
+    if(value1 >= 120 && value1< 140){
+      Serial.print("I am in pain");
+      lcd.clear();
+      lcd.print("I am in pain");
+       digitalWrite(6, HIGH);
+      delay(500);
+      digitalWrite(6, LOW);
+       BTserial.println("I am in pain");
+       delay(3000);
+    }
+    if(value1 >= 50 && value1< 90){
+      Serial.print("i want coffee");
+      lcd.clear();
+      lcd.print("I want coffee");
+      digitalWrite(6, HIGH);
+      delay(500);
+      digitalWrite(6, LOW);
+       BTserial.println("I want coffee");
+        delay(3000);
+      // ab bas
+      
+    }
+}
+
+ 
